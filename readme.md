@@ -1,120 +1,51 @@
-<a name="readme-top">
+FINAL PROJECT
 
-<br/>
+Project Requirements
+CREATE A WEBSITE WHICH CONFORMS TO THE FOLLOWING REQUIREMENTS:
 
-<br />
-<div align="center">
-  <a href="https://github.com/zyx-0314/">
-  <!-- TODO: If you want to add logo or banner you can add it here -->
-    <img src="./assets/img/nyebe_white.png" alt="Nyebe" width="130" height="100">
-  </a>
-<!-- TODO: Change Title to the name of the title of your Project -->
-  <h3 align="center">Title</h3>
-</div>
-<!-- TODO: Make a short description -->
-<div align="center">
-  Short Description. (Optional)
-</div>
+1. The website that you will develop will be an improved version of the Pokemon GO Webstore.
+2. There must be a home page.
+3. The website must have a registration page that has the following fields:
+- e-mail address (valid)
+- Password (including a confirm password field)
+- his/her in-game player ID, the format is: #### #### ####, this number must be auto-generated.
+- his/her IGN (in-game-name)
 
-<br />
+4. The website must have a store page, which has the following:
+- It must feature all in-game items. Please refer to the game itself or look for sample images of the in-game store
+- It must have a cart page that shows the items in the cart, the prices, and other details that can be seen on the cart page.
+- It must have a payment page that is used to confirm the user's payment method.
 
-<!-- TODO: Change the zyx-0314 into your github username  -->
-<!-- TODO: Change the WD-Template-Project into the same name of your folder -->
-![](https://visit-counter.vercel.app/counter.png?page=zyx-0314/WD-Template-Project)
+5. The website must also have a transaction history page where the user can see their past transactions.
 
----
+6. The website must have a profile page that shows information about the user.
 
-<br />
-<br />
+7. The information that will be displayed on your webpages may be imaginary or just placeholders. (e.g. the 
+transaction history, current items in the cart)
+8. Links or buttons must be used to navigate through your website.
 
-<!-- TODO: If you want to add more layers for your readme -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#overview">Overview</a>
-      <ol>
-        <li>
-          <a href="#key-components">Key Components</a>
-        </li>
-        <li>
-          <a href="#technology">Technology</a>
-        </li>
-      </ol>
-    </li>
-    <li>
-      <a href="#rule,-practices-and-principles">Rules, Practices and Principles</a>
-    </li>
-    <li>
-      <a href="#resources">Resources</a>
-    </li>
-  </ol>
-</details>
+9. NO DATABASE IS NEEDED FOR THIS PROJECT.
 
----
 
-## Overview
+-----------------------------------------------
 
-<!-- TODO: To be changed -->
-<!-- The following are just sample -->
-Description of the project in details.
+NOTES:
 
-Guiding Question:
-- What is the project
-- Whats the purpose
-- What are key components
-- What technology used and how it is used
+1. You can visit the official Pokemon GO webstore: Pokemon GO Webstore.
+2. You can use official images of the game.
+3. In the footer of ALL your webpages, put a disclaimer that the copyright owner of the images used is Niantic and that your project is "for educational purposes only and no copyright infringement is intended."
+4. Your group name and logo MUST always appear on all of your project's webpages.
 
-### Key Components
-<!-- TODO: List of Key Components -->
-<!-- The following are just sample -->
-- MultiPage Website/Single Page Website
-- Parallax transition
-- Transactional
+WHAT AND HOW TO SUBMIT:
 
-### Technology
-<!-- TODO: List of Technology Used -->
-![HTML](https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS](https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white)
+- Create a new GitHub account using a new email for your group, create a GitHub Pages repository then upload your web site files and paste your repository link to the submission for this project. (DO NOT FORGET TO MAKE YOUR REPOSITORY AS PUBLIC).
 
-## Rules, Practices and Principles
-1. Always use `WD-` in the front of the Title of the Project for the Subject followed by your custom naming.
-2. Do not rename any .html files; always use `index.html` as the filename.
-3. Place Files in their respective folders.
-4. All file naming are in camel case.
-   - Camel case is naming format where there is no white space in separation of each words, the first word is in all lower case while the succeding words first letter are in upper followed by lower cased letters.
-   - ex.: buttonAnimatedStyle.css
-5. Use only `External CSS`.
-6. Renaming of Pages folder names are a must, and relates to what it is doing or data it holding.
-7. File Structure to follow below.
+GRADING:
 
-```
-WD-ProjectName
-└─ assets
-|   └─ css
-|   |   └─ style.css
-|   └─ img
-|   |   └─ fileWith.jpeg/.jpg/.webp/.png
-|   └─ js
-|       └─ script.js
-└─ pages
-|  └─ pageName
-|     └─ assets
-|     |  └─ css
-|     |  |  └─ style.css
-|     |  └─ img
-|     |  |  └─ fileWith.jpeg/.jpg/.webp/.png
-|     |  └─ js
-|     |     └─ script.js
-|     └─ index.html
-└─ index.html
-└─ readme.md
-```
+- Functionality (if the webpages works well) - 50 points
+- Conformity (if the project conforms to the requirements) - 30 poins
+- Design (If your webpage is responsive, shows characteristics of a good web design) - 15 points
+- Timeliness (if the project is submitted BEFORE the deadline) - 5 points
+- DEADLINE OF PROJECT:
 
-## Resources
-
-<!-- TODO: Add References -->
-| Title | Purpose | Link |
-|-|-|-|
-| Sample Title | Sample purpose would be here like this and this is the example of what it is. | trykolang.com |
+April 2, 2025, 11:59 PM (NO EXTENSIONS, LATE SUBMISSIONS WILL NOT BE ACCEPTED)
