@@ -5,7 +5,4 @@ IT0063 - Advance Web Design
 Group: Lebron
 
 Group Members:
-Arias, Jan Matthew
-Labro, Johnlerry
-Renia, Ivan Christopher
-Dar, Francis Hans Matthew M.
+Arias, Labro, Renia, Dar
