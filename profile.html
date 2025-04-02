@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <nav
+      class="bg-white shadow-md px-8 py-4 fixed top-0 w-full z-50 flex justify-between items-center"
+    >
+      <div class="flex items-center space-x-3 flex-col md:flex-row">
+        <a href="index.html" class="flex items-center space-x-3">
+          <img src="layouts/public/images/logo.png" alt="Logo" class="h-12" />
+          <span class="text-[#198496] text-2xl font-semibold">Web Store</span>
+        </a>
+      </div>
+
+      <div
+        class="hidden md:flex items-center space-x-8 text-[#0f4f5a] text-lg font-medium"
+      >
+        <a href="#" class="hover:underline">Code Redemption</a>
+        <a href="#" class="hover:underline">Event Ticketing</a>
+        <div id="user-menu" class="relative z-50">
+          <a
+            id="sign-in-button"
+            href="login.html"
+            class="px-6 py-3 bg-gradient-to-r from-green-400 to-teal-500 text-white font-semibold rounded-full shadow-lg hover:opacity-80 transition"
+          >
+            Sign In
+          </a>
+          <div
+            id="dropdown-menu"
+            class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg"
+          >
+            <a
+              href="profile.html"
+              class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+              >Profile</a
+            >
+            <button
+              onclick="logout()"
+              class="w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100"
+            >
+              Sign Out
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Profile Section -->
+    <div
+      class="max-w-4xl mx-auto mt-24 bg-white shadow-lg rounded-lg p-6 w-full"
+    >
+      <div class="flex items-center space-x-6">
+        <img
+          src="https://via.placeholder.com/100"
+          alt="Profile Image"
+          class="w-24 h-24 rounded-full shadow-md"
+        />
+        <div>
+          <h2 id="profile-name" class="text-3xl font-semibold">User Name</h2>
+          <p id="profile-email" class="text-gray-500">user@example.com</p>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <h3 class="text-lg font-semibold">Account Details</h3>
+        <div class="mt-2 space-y-2">
+          <p>
+            <strong>In-Game Name:</strong>
+            <span id="profile-ign">Player123</span>
+          </p>
+          <p>
+            <strong>Player ID:</strong>
+            <span id="profile-id">0000-0000-0000</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transaction History -->
+    <div
+      class="max-w-4xl mx-auto mt-6 bg-white shadow-lg rounded-lg p-6 w-full"
+    >
+      <h3 class="text-lg font-semibold">Transaction History</h3>
+      <div id="transaction-history" class="mt-4 space-y-2">
+        <p class="text-gray-500 text-sm">No transactions found.</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-40 bg-gray-900 text-white py-6 text-center">
+      <div class="mb-4">
+        <img
+          src="layouts/public/lebron-group.jpg"
+          alt="Logo"
+          class="w-24 h-24 mx-auto"
+        />
+      </div>
+      <p>© Lebron Group</p>
+      <p>
+        For education purposes only and no copyright infringement is intended
+      </p>
+      <div class="mt-2 space-x-4">
+        <a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a>
+        <a href="#" class="text-gray-400 hover:text-white">Terms of Service</a>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const loggedInUser = localStorage.getItem("loggedInUser");
+
+        if (!loggedInUser) {
+          window.location.href = "login.html"; // Redirect if not logged in
+        } else {
+          const userData = JSON.parse(loggedInUser);
+          document.getElementById("profile-name").textContent =
+            userData.username;
+          document.getElementById("profile-email").textContent =
+            userData.email || "No email";
+          document.getElementById("profile-ign").textContent =
+            userData.username;
+          document.getElementById("profile-id").textContent = userData.playerID;
+
+          // Load Transaction History
+          loadTransactionHistory();
+        }
+      });
+
+      function logout() {
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "login.html";
+      }
+
+      function loadTransactionHistory() {
+        const transactionContainer = document.getElementById(
+          "transaction-history"
+        );
+        const transactions =
+          JSON.parse(localStorage.getItem("transactions")) || [];
+
+        if (transactions.length === 0) {
+          transactionContainer.innerHTML = `<p class="text-gray-500 text-sm">No transactions found.</p>`;
+          return;
+        }
+
+        transactionContainer.innerHTML = transactions
+          .map(
+            (tx) => ` 
+                <div class="bg-gray-50 p-3 rounded-lg shadow-md border border-gray-200">
+                    <p class="text-sm font-semibold">${tx.item}</p>
+                    <p class="text-gray-600 text-xs">₱${tx.price} - ${tx.date}</p>
+                </div>
+            `
+          )
+          .join("");
+      }
+    </script>
+    <script src="js/index.js" defer></script>
+    <script src="js/registration.js" defer></script>
+  </body>
+</html>

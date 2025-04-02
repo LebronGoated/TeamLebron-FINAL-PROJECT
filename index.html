@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokémon GO Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        window.addEventListener("scroll", () => {
+          const sections = document.querySelectorAll("section");
+          let scrollPosition = window.scrollY + 100;
+
+          sections.forEach((section) => {
+            const id = section.getAttribute("id");
+            const link = document.querySelector(`a[href="#${id}"]`);
+
+            if (
+              section.offsetTop <= scrollPosition &&
+              section.offsetTop + section.offsetHeight > scrollPosition
+            ) {
+              link.classList.add("text-teal-500", "font-bold");
+            } else {
+              link.classList.remove("text-teal-500", "font-bold");
+            }
+          });
+        });
+      });
+    </script>
+  </head>
+
+  <body class="bg-gray-100">
+    <!-- Discount Banner (Always Visible) -->
+    <div
+      class="bg-[#60acbc] text-white text-center py-3 text-base font-semibold"
+    >
+      15% discount for your first Web Store purchase on any item $9.99 or more!
+    </div>
+
+    <!-- Navbar (Becomes Sticky on Scroll) -->
+    <nav
+      x-data="{ isSticky: false }"
+      x-init="window.addEventListener('scroll', () => { isSticky = window.scrollY > 50 })"
+      :class="isSticky 
+        ? 'fixed top-0 w-full mx-auto bg-[#f8f4f4] pb-4 shadow-md z-50 px-32' 
+        : 'relative mx-24 px-8'"
+      class="flex items-center justify-between pt-4"
+    >
+      <!-- Logo -->
+      <div class="flex items-center space-x-3">
+        <img
+          src="layouts/public/images/logo.png"
+          alt="Pokémon Logo"
+          class="h-16"
+        />
+        <span class="text-[#198496] text-3xl font-semibold">Web Store</span>
+      </div>
+
+      <!-- Navigation Links -->
+      <div
+        class="hidden md:flex items-center space-x-8 text-[#0f4f5a] text-lg font-medium ml-auto"
+      >
+        <a href="#" class="mr-6 hover:underline">Code Redemption</a>
+        <a href="#" class="hover:underline">Event Ticketing</a>
+
+        <div id="user-menu" class="relative z-50">
+          <!-- Apply z-index to the user-menu -->
+          <a
+            id="sign-in-button"
+            href="login.html"
+            class="px-6 py-3 bg-gradient-to-r from-green-400 to-teal-500 text-white font-semibold rounded-full shadow-lg hover:opacity-80 transition"
+          >
+            Sign In
+          </a>
+          <div
+            id="dropdown-menu"
+            class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg"
+          >
+            <a
+              href="profile.html"
+              class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+            >
+              Profile
+            </a>
+            <button
+              onclick="logout()"
+              class="w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100"
+            >
+              Sign Out
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section
+      x-data="{ currentIndex: 0, images: [
+    'layouts/public/images/trees.png',
+    'layouts/public/images/woods.png',
+    'layouts/public/images/park.png',
+    'layouts/public/images/dynamax.png'
+  ] }"
+      class="relative mx-24 mt-4 max-w-[calc(100%-3rem)]"
+    >
+      <!-- Image Display -->
+      <div
+        class="overflow-hidden relative h-[500px] md:h-[600px] rounded-lg shadow-xl"
+      >
+        <template x-for="(image, index) in images" :key="index">
+          <img
+            :src="image"
+            x-show="currentIndex === index"
+            class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+          />
+        </template>
+      </div>
+
+      <!-- Dots Navigation -->
+      <div
+        class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3"
+      >
+        <template x-for="(image, index) in images" :key="index">
+          <button
+            @click="currentIndex = index"
+            class="w-4 h-4 rounded-full"
+            :class="currentIndex === index ? 'bg-white' : 'bg-gray-400'"
+          ></button>
+        </template>
+      </div>
+    </section>
+
+    <div class="flex justify-center space-x-8 mt-6 py-4">
+      <a
+        href="#about"
+        class="text-gray-700 hover:text-teal-500 hover:underline transition"
+        >Item Boxes</a
+      >
+      <a
+        href="#coins"
+        class="text-gray-700 hover:text-teal-500 hover:underline transition"
+        >Poke Coins</a
+      >
+      <a
+        href="#daily"
+        class="text-gray-700 hover:text-teal-500 hover:underline transition"
+        >Daily Bundles</a
+      >
+    </div>
+    <!-- Page Content -->
+    <div class="mt-2">
+      <section id="about" class="h-24 flex items-center">
+        <h1 class="text-4xl font-bold ml-24">Item Boxes</h1>
+      </section>
+
+      <section class="mx-2 p-4 bg-gray-100">
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ml-24 mr-24"
+        >
+          <!-- Card -->
+          <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+            <div
+              class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+            >
+              <span
+                class="absolute top-2 left-2 bg-gray-800 text-white text-xs px-2 py-1 rounded"
+              >
+                ONE TIME ONLY
+              </span>
+              <img
+                src="layouts/public/images/items/mega-audino.png"
+                alt="Mega Audino Raid Day Ultra Ticket Box"
+                class="w-32 h-32 object-contain"
+              />
+            </div>
+
+            <div class="p-4">
+              <h3 class="text-lg font-semibold">
+                Mega Audino Raid Day Ultra Ticket Box
+              </h3>
+              <p class="text-gray-500 text-sm">Can only be purchased 1 time.</p>
+
+              <!-- Button -->
+              <button
+                class="mt-20 w-full bg-green-500 text-white py-2 rounded-lg text-lg font-semibold"
+                onclick="goToReview('Mega Audino Raid Day Ultra Ticket Box', 289.00, 'layouts/public/images/items/mega-audino.png')"
+              >
+                ₱149.00
+              </button>
+            </div>
+          </div>
+
+          <!-- Duplicate for more cards -->
+          <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+            <div
+              class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+            >
+              <span
+                class="absolute top-2 left-2 bg-gray-800 text-white text-xs px-2 py-1 rounded"
+              >
+                LIMITED TIME ONLY
+              </span>
+              <img
+                src="layouts/public/images/items/power-ticket.png"
+                alt="Power Up Ticket Ultra Ticket Box"
+                class="w-32 h-32 object-contain"
+              />
+            </div>
+
+            <div class="p-4">
+              <h3 class="text-lg font-semibold">
+                Power Up Ticket Ultra Ticket Box
+              </h3>
+              <p class="text-gray-500 text-sm">Can only be purchased 1 time.</p>
+
+              <!-- Button -->
+              <button
+                class="mt-20 w-full bg-green-500 text-white py-2 rounded-lg text-lg font-semibold"
+                onclick="goToReview('Power Up Ticket Ultra Ticket Box', 289.00, 'layouts/public/images/items/power-ticket.png')"
+              >
+                ₱245.00
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+            <div
+              class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+            >
+              <span
+                class="absolute top-2 left-2 bg-gray-800 text-white text-xs px-2 py-1 rounded"
+              >
+                LIMITED TIME ONLY
+              </span>
+              <img
+                src="layouts/public/images/items/ultra-box.png"
+                alt="Ultra Raid Box"
+                class="w-32 h-32 object-contain"
+              />
+            </div>
+
+            <div class="p-4">
+              <h3 class="text-lg font-semibold">Ultra Raid Box</h3>
+              <p class="text-gray-500 text-sm">Can only be purchased 1 time.</p>
+
+              <!-- Button -->
+              <button
+                class="mt-20 w-full bg-green-500 text-white py-2 rounded-lg text-lg font-semibold"
+                onclick="goToReview('Ultra Raid Box', 289.00, 'layouts/public/images/items/ultra-box.png')"
+              >
+                ₱149.00
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+            <div
+              class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+            >
+              <span
+                class="absolute top-2 left-2 bg-gray-800 text-white text-xs px-2 py-1 rounded"
+              >
+                LMITED TIME ONLY
+              </span>
+              <img
+                src="layouts/public/images/items/might-mastery.png"
+                alt="Might and Mastery Box"
+                class="w-32 h-32 object-contain"
+              />
+            </div>
+
+            <div class="p-4">
+              <h3 class="text-lg font-semibold">Might and Mastery Box</h3>
+              <p class="text-gray-500 text-sm">Can only be purchased 1 time.</p>
+
+              <!-- Button -->
+              <button
+                class="mt-20 w-full bg-green-500 text-white py-2 rounded-lg text-lg font-semibold"
+                onclick="goToReview('Might and Mastery Box', 289.00, 'layouts/public/images/items/might-mastery.png')"
+              >
+                ₱149.00
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+            <div
+              class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+            >
+              <span
+                class="absolute top-2 left-2 bg-gray-800 text-white text-xs px-2 py-1 rounded"
+              >
+                POPULAR
+              </span>
+              <img
+                src="layouts/public/images/items/egg-basic.png"
+                alt="Egg Incubator"
+                class="w-32 h-32 object-contain"
+              />
+            </div>
+
+            <div class="p-4">
+              <h3 class="text-lg font-semibold">Egg Incubator</h3>
+              <p class="text-gray-500 text-sm">Can only be purchased 1 time.</p>
+
+              <!-- Button -->
+              <button
+                class="mt-20 w-full bg-green-500 text-white py-2 rounded-lg text-lg font-semibold"
+                onclick="goToReview('Egg Incubator', 289.00, 'layouts/public/images/items/egg-basic.png')"
+              >
+                ₱88.00
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+            <div
+              class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+            >
+              <span
+                class="absolute top-2 left-2 bg-gray-800 text-white text-xs px-2 py-1 rounded"
+              >
+                POPULAR
+              </span>
+              <img
+                src="layouts/public/images/items/egg-super.png"
+                alt="Super Incubator"
+                class="w-32 h-32 object-contain"
+              />
+            </div>
+
+            <div class="p-4">
+              <h3 class="text-lg font-semibold">Super Incubator</h3>
+              <p class="text-gray-500 text-sm">Can only be purchased 1 time.</p>
+
+              <!-- Button -->
+              <button
+                class="mt-20 w-full bg-green-500 text-white py-2 rounded-lg text-lg font-semibold"
+                onclick="goToReview('Super Incubator', 289.00, 'layouts/public/images/items/egg-super.png')"
+              >
+                ₱88.00
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+            <div
+              class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+            >
+              
+              <img
+                src="layouts/public/images/items/max-revive.png"
+                alt="Max Revive"
+                class="w-32 h-32 object-contain"
+              />
+            </div>
+
+            <div class="p-4">
+              <h3 class="text-lg font-semibold">Max Revive</h3>
+              <p class="text-gray-500 text-sm">Can only be purchased 1 time.</p>
+
+              <!-- Button -->
+              <button
+                class="mt-20 w-full bg-green-500 text-white py-2 rounded-lg text-lg font-semibold"
+                onclick="goToReview('Max Revive', 289.00, 'layouts/public/images/items/max-revive.png')"
+              >
+                ₱59.00
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+            <div
+              class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+            >
+             
+              <img
+                src="layouts/public/images/items/premium-pass.png"
+                alt="Premium Battle Pass"
+                class="w-32 h-32 object-contain"
+              />
+            </div>
+
+            <div class="p-4">
+              <h3 class="text-lg font-semibold">Premium Battle Pass</h3>
+              <p class="text-gray-500 text-sm">Can only be purchased 1 time.</p>
+
+              <!-- Button -->
+              <button
+                class="mt-20 w-full bg-green-500 text-white py-2 rounded-lg text-lg font-semibold"
+                onclick="goToReview('Premium Battle Pass', 289.00, 'layouts/public/images/items/premium-pass.png')"
+              >
+                ₱88.00
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+            <div
+              class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+            >
+              
+              <img
+                src="layouts/public/images/items/max-pack.png"
+                alt="Max Particle Pack x6"
+                class="w-32 h-32 object-contain"
+              />
+            </div>
+
+            <div class="p-4">
+              <h3 class="text-lg font-semibold">Max Particle Pack x6</h3>
+              <p class="text-gray-500 text-sm">Can only be purchased 1 time.</p>
+
+              <!-- Button -->
+              <button
+                class="mt-20 w-full bg-green-500 text-white py-2 rounded-lg text-lg font-semibold"
+                onclick="goToReview('Max Particle Pack x6', 289.00, 'layouts/public/images/items/max-pack.png')"
+              >
+                ₱235.00
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+            <div
+              class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+            >
+              <img
+                src="layouts/public/images/items/max-mushroom.png"
+                alt="Max Mushroom"
+                class="w-32 h-32 object-contain"
+              />
+            </div>
+
+            <div class="p-4">
+              <h3 class="text-lg font-semibold">Max Mushroom</h3>
+              <p class="text-gray-500 text-sm">Can only be purchased 1 time.</p>
+
+              <!-- Button -->
+              <button
+                class="mt-20 w-full bg-green-500 text-white py-2 rounded-lg text-lg font-semibold"
+                onclick="goToReview('Max Mushroom', 289.00, 'layouts/public/images/items/max-mushroom.png')"
+              >
+                ₱245.00
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="mt-2">
+        <section id="coins" class="h-24 flex items-center">
+          <h1 class="text-4xl font-bold ml-28">PokéCoins</h1>
+        </section>
+
+        <section class="mx-2 p-4 bg-gray-100">
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ml-24 mr-24"
+          >
+            <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+              <div
+                class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+              >
+                
+                <img
+                  src="layouts/public/images/items/110.png"
+                  alt="110 PokéCoins"
+                  class="w-32 h-32 object-contain"
+                />
+              </div>
+
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">110 PokéCoins</h3>
+                <p class="text-gray-500 text-sm">
+                  Can only be purchased 1 time.
+                </p>
+
+                <!-- Button -->
+                <button
+                  class="mt-20 w-full bg-green-500 text-white py-2 rounded-lg text-lg font-semibold"
+                  onclick="goToReview('110 PokéCoins', 289.00, 'layouts/public/images/items/110.png')"
+                >
+                  ₱29.00
+                </button>
+              </div>
+            </div>
+
+            <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+              <div
+                class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+              >
+                
+                <img
+                  src="layouts/public/images/items/600.png"
+                  alt="600 PokéCoins"
+                  class="w-32 h-32 object-contain"
+                />
+              </div>
+
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">600 PokéCoins</h3>
+                <p class="text-gray-500 text-sm">
+                  Can only be purchased 1 time.
+                </p>
+
+                <!-- Button -->
+                <button
+                  class="mt-20 w-full bg-green-500 text-white py-2 rounded-lg text-lg font-semibold"
+                  onclick="goToReview('600 PokéCoins', 289.00, 'layouts/public/images/items/600.png')"
+                >
+                  ₱149.00
+                </button>
+              </div>
+            </div>
+
+            <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+              <div
+                class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+              >
+                
+                <img
+                  src="layouts/public/images/items/1300.png"
+                  alt="1,300 PokéCoins"
+                  class="w-32 h-32 object-contain"
+                />
+              </div>
+
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">1,300 PokéCoins</h3>
+                <p class="text-gray-500 text-sm">
+                  Can only be purchased 1 time.
+                </p>
+
+                <!-- Button -->
+                <button
+                  class="mt-20 w-full bg-green-500 text-white py-2 rounded-lg text-lg font-semibold"
+                  onclick="goToReview('1,300 PokéCoins', 289.00, 'layouts/public/images/items/1300.png')"
+                >
+                  ₱245.00
+                </button>
+              </div>
+            </div>
+
+            <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+              <div
+                class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+              >
+                
+                <img
+                  src="layouts/public/images/items/2700.png"
+                  alt="2,700 PokéCoins"
+                  class="w-32 h-32 object-contain"
+                />
+              </div>
+
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">2,700 PokéCoins</h3>
+                <p class="text-gray-500 text-sm">
+                  Can only be purchased 1 time.
+                </p>
+
+                <!-- Button -->
+                <button
+                  class="mt-20 w-full bg-green-500 text-white py-2 rounded-lg text-lg font-semibold"
+                  onclick="goToReview('2,700 PokéCoins', 289.00, 'layouts/public/images/items/2700.png')"
+                >
+                  ₱500.00
+                </button>
+              </div>
+            </div>
+
+            <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+              <div
+                class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+              >
+                
+                <img
+                  src="layouts/public/images/items/5600.png"
+                  alt="5,600 PokéCoins"
+                  class="w-32 h-32 object-contain"
+                />
+              </div>
+
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">5,600 PokéCoins</h3>
+                <p class="text-gray-500 text-sm">
+                  Can only be purchased 1 time.
+                </p>
+
+                <!-- Button -->
+                <button
+                  class="mt-20 w-full bg-green-500 text-white py-2 rounded-lg text-lg font-semibold"
+                  onclick="goToReview('5,600 PokéCoins', 289.00, 'layouts/public/images/items/5600.png')"
+                >
+                  ₱994.00
+                </button>
+              </div>
+            </div>
+
+            <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+              <div
+                class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+              >
+                
+                <img
+                  src="layouts/public/images/items/15500.png"
+                  alt="15,500 PokéCoins"
+                  class="w-32 h-32 object-contain"
+                />
+              </div>
+
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">15,500 PokéCoins</h3>
+                <p class="text-gray-500 text-sm">
+                  Can only be purchased 1 time.
+                </p>
+
+                <!-- Button -->
+                <button
+                  class="mt-20 w-full bg-green-500 text-white py-2 rounded-lg text-lg font-semibold"
+                  onclick="goToReview('15,500 PokéCoins', 289.00, 'layouts/public/images/items/15500.png')"
+                >
+                  ₱2,507.00
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="daily" class="h-24 flex items-center">
+          <h1 class="text-4xl font-bold ml-28">Daily Section</h1>
+        </section>
+
+        <section class="mx-2 p-4 bg-gray-100">
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 ml-24 mr-24"
+          >
+            <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+              <div
+                class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+              >
+                
+                <img
+                  src="layouts/public/images/items/boost-box.png"
+                  alt="Boost Box"
+                  class="w-32 h-32 object-contain"
+                />
+              </div>
+
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">Boost Box</h3>
+                <p class="text-gray-500 text-sm">
+                  Can only be purchased 1 time.
+                </p>
+
+                <!-- Button -->
+                <button
+                class="mt-24 w-32 bg-green-500 text-white py-2 rounded-lg text-lg font-semibold flex items-center justify-center"
+                onclick="goToReview('Boost Box', 289.00, 'layouts/public/images/items/boost-box.png')"
+              >
+                <img src="layouts/public/images/items/poke-coin.png" alt="Poke Coin" class="mr-2 w-6 h-6" />
+                99
+              </button>
+              
+              </div>
+            </div>
+
+            <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+              <div
+                class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+              >
+               
+                <img
+                  src="layouts/public/images/items/600.png"
+                  alt="Great Raid Box"
+                  class="w-32 h-32 object-contain"
+                />
+              </div>
+
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">Great Raid Box</h3>
+                <p class="text-gray-500 text-sm">
+                  Can only be purchased 1 time.
+                </p>
+
+                <!-- Button -->
+                <button
+                class="mt-24 w-32 bg-green-500 text-white py-2 rounded-lg text-lg font-semibold flex items-center justify-center"
+                onclick="goToReview('Great Raid Box', 289.00, 'layouts/public/images/items/600.png')"
+              >
+                <img src="layouts/public/images/items/poke-coin.png" alt="Poke Coin" class="mr-2 w-6 h-6" />
+                250
+              </button>
+              </div>
+            </div>
+
+            <div class="bg-white shadow rounded-lg overflow-hidden h-[400px]">
+              <div
+                class="bg-[#DDF4E4] p-6 flex flex-col items-center w-full relative"
+              >
+               
+                <img
+                  src="layouts/public/images/items/voyager-box.png"
+                  alt="Voyager Box"
+                  class="w-32 h-32 object-contain"
+                />
+              </div>
+
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">Voyager Box</h3>
+                <p class="text-gray-500 text-sm">
+                  Can only be purchased 1 time.
+                </p>
+
+                 <!-- Button -->
+                 <button
+                 class="mt-24 w-32 bg-green-500 text-white py-2 rounded-lg text-lg font-semibold flex items-center justify-center"
+                 onclick="goToReview('Boost Box', 289.00, 'layouts/public/images/items/voyager-box.png')"
+               >
+                 <img src="layouts/public/images/items/poke-coin.png" alt="Poke Coin" class="mr-2 w-6 h-6" />
+                 1,120
+               </button>
+              </div>
+            </div>
+
+            
+          </div>
+        </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-6 text-center">
+      <div class="mb-4">
+        <img src="layouts/public/lebron-group.jpg" alt="Logo" class="w-24 h-24 mx-auto" />
+      </div>
+      <p>© Lebron Group</p>
+      <p>For education purposes only and no copyright infringement is intended</p>
+      <div class="mt-2 space-x-4">
+        <a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a>
+        <a href="#" class="text-gray-400 hover:text-white">Terms of Service</a>
+      </div>
+    </footer>
+    
+    <script src="js/index.js" defer></script>
+    <script src="js/registration.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Review</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script src="js/review.js" defer></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <nav
+      class="bg-white shadow-md px-8 py-4 fixed top-0 w-full z-50 flex justify-between items-center"
+    >
+      <div class="flex items-center space-x-3 flex-col md:flex-row">
+        <a href="index.html" class="flex items-center space-x-3">
+          <img src="layouts/public/images/logo.png" alt="Logo" class="h-12" />
+          <span class="text-[#198496] text-2xl font-semibold">Web Store</span>
+        </a>
+      </div>
+
+      <div
+        class="hidden md:flex items-center space-x-8 text-[#0f4f5a] text-lg font-medium"
+      >
+        <a href="#" class="hover:underline">Code Redemption</a>
+        <a href="#" class="hover:underline">Event Ticketing</a>
+        <div id="user-menu" class="relative z-50">
+          <a
+            id="sign-in-button"
+            href="login.html"
+            class="px-6 py-3 bg-gradient-to-r from-green-400 to-teal-500 text-white font-semibold rounded-full shadow-lg hover:opacity-80 transition"
+          >
+            Sign In
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Order Review Section -->
+    <div class="flex-grow flex items-center justify-center mt-20 px-4">
+      <div
+        id="review-container"
+        class="bg-white p-6 rounded-lg shadow-lg max-w-5xl mx-auto w-full flex items-center space-x-6"
+      >
+        <!-- Item Image -->
+        <img
+          id="item-image"
+          src=""
+          alt="Item Image"
+          class="w-40 h-40 rounded-lg shadow-md object-cover"
+        />
+
+        <!-- Item Details -->
+        <div class="flex flex-col w-full">
+          <h1 class="text-2xl font-bold text-gray-800 mb-2">Order Review</h1>
+          <h2 id="item-name" class="text-xl font-semibold text-gray-900"></h2>
+          <p id="item-price" class="text-lg text-gray-600 mt-1"></p>
+          <button
+            id="proceed-btn"
+            class="mt-4 bg-green-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-600 transition"
+          >
+            Proceed to Payment
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Payment -->
+    <div
+      id="payment-modal"
+      class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden"
+    >
+      <div class="bg-white p-6 rounded-lg shadow-lg w-1/2">
+        <!-- Modal Header -->
+        <div class="flex justify-between items-center">
+          <h2 class="text-2xl font-semibold text-gray-900">
+            Payment Information
+          </h2>
+          <button id="close-modal" class="text-gray-500 text-xl">
+            &times;
+          </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="mt-4">
+          <h3 class="text-xl font-semibold text-gray-800">Order Details</h3>
+          <div class="mt-4">
+            <img
+              id="modal-item-image"
+              src=""
+              alt="Item Image"
+              class="w-24 h-24 rounded-lg shadow-md object-cover"
+            />
+            <p
+              id="modal-item-name"
+              class="text-lg font-semibold text-gray-900 mt-2"
+            ></p>
+            <p id="modal-item-price" class="text-lg text-gray-600"></p>
+          </div>
+
+          <!-- Payment Methods -->
+          <div class="mt-6">
+            <h3 class="text-lg font-semibold text-gray-800">
+              Select Payment Method
+            </h3>
+
+            <!-- Flex Container for Payment Methods -->
+            <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <!-- Credit Card -->
+              <div class="payment-method p-4 border rounded-lg text-center">
+                <i class="fas fa-credit-card text-4xl text-green-500 mb-2"></i>
+                <h4 class="text-lg font-semibold">Credit Card</h4>
+                <button
+                  id="card-btn"
+                  class="w-full bg-green-500 text-white py-2 rounded-lg text-lg mt-2"
+                >
+                  Select
+                </button>
+                <div id="credit-card-payment" class="hidden mt-4">
+                  <input
+                    type="text"
+                    id="cc-number"
+                    placeholder="Card Number"
+                    class="w-full p-2 border border-gray-300 rounded-lg mb-2"
+                  />
+                  <input
+                    type="text"
+                    id="cc-expiry"
+                    placeholder="Expiry Date"
+                    class="w-full p-2 border border-gray-300 rounded-lg mb-2"
+                  />
+                  <input
+                    type="text"
+                    id="cc-cvc"
+                    placeholder="CVC"
+                    class="w-full p-2 border border-gray-300 rounded-lg mb-4"
+                  />
+                  <button
+                    id="confirm-payment-cc"
+                    class="w-full bg-green-500 text-white py-2 rounded-lg text-lg"
+                  >
+                    Confirm Payment
+                  </button>
+                </div>
+              </div>
+
+              <!-- PayPal -->
+              <div class="payment-method p-4 border rounded-lg text-center">
+                <i class="fab fa-paypal text-4xl text-blue-800 mb-2"></i>
+                <h4 class="text-lg font-semibold">PayPal</h4>
+                <button
+                  id="paypal-btn"
+                  class="w-full bg-blue-800 text-white py-2 rounded-lg text-lg mt-2"
+                >
+                  Select
+                </button>
+                <div id="paypal-payment" class="hidden mt-4">
+                  <input
+                    type="email"
+                    id="paypal-email"
+                    placeholder="PayPal Email"
+                    class="w-full p-2 border border-gray-300 rounded-lg mb-2"
+                  />
+                  <button
+                    id="confirm-payment-pp"
+                    class="w-full bg-blue-800 blue-800 text-white py-2 rounded-lg text-lg"
+                  >
+                    Confirm Payment
+                  </button>
+                </div>
+              </div>
+
+              <!-- GCash -->
+              <div class="payment-method p-4 border rounded-lg text-center">
+                <i class="fa-solid fa-g text-4xl text-blue-500 mb-2"></i>
+                <h4 class="text-lg font-semibold">GCash</h4>
+                <button
+                  id="gcash-btn"
+                  class="w-full bg-blue-500 text-white py-2 rounded-lg text-lg mt-2"
+                >
+                  Select
+                </button>
+                <div id="gcash-payment" class="hidden mt-4">
+                  <input
+                    type="text"
+                    id="gcash-phone"
+                    placeholder="GCash Number"
+                    class="w-full p-2 border border-gray-300 rounded-lg mb-2"
+                  />
+                  <button
+                    id="confirm-payment-gc"
+                    class="w-full bg-blue-500 text-white py-2 rounded-lg text-lg"
+                  >
+                    Confirm Payment
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Show Modal on Button Click
+      document
+        .getElementById("proceed-btn")
+        .addEventListener("click", function () {
+          const itemName = document.getElementById("item-name").textContent;
+          const itemPrice = document.getElementById("item-price").textContent;
+          const itemImage = document.getElementById("item-image").src;
+
+          // Populate the modal with item details
+          document.getElementById("modal-item-name").textContent = itemName;
+          document.getElementById("modal-item-price").textContent = itemPrice;
+          document.getElementById("modal-item-image").src = itemImage;
+
+          // Show the modal
+          document.getElementById("payment-modal").classList.remove("hidden");
+        });
+
+      // Close Modal
+      document
+        .getElementById("close-modal")
+        .addEventListener("click", function () {
+          document.getElementById("payment-modal").classList.add("hidden");
+        });
+
+      // Show respective payment method inputs
+      document
+        .getElementById("card-btn")
+        .addEventListener("click", function () {
+          document
+            .getElementById("credit-card-payment")
+            .classList.remove("hidden");
+          document.getElementById("paypal-payment").classList.add("hidden");
+          document.getElementById("gcash-payment").classList.add("hidden");
+        });
+
+      document
+        .getElementById("paypal-btn")
+        .addEventListener("click", function () {
+          document
+            .getElementById("credit-card-payment")
+            .classList.add("hidden");
+          document.getElementById("paypal-payment").classList.remove("hidden");
+          document.getElementById("gcash-payment").classList.add("hidden");
+        });
+
+      document
+        .getElementById("gcash-btn")
+        .addEventListener("click", function () {
+          document
+            .getElementById("credit-card-payment")
+            .classList.add("hidden");
+          document.getElementById("paypal-payment").classList.add("hidden");
+          document.getElementById("gcash-payment").classList.remove("hidden");
+        });
+
+      // Store transaction in localStorage after successful payment
+      function storeTransaction(paymentMethod, details) {
+        const transaction = {
+          item: document.getElementById("modal-item-name").textContent,
+          price: document.getElementById("modal-item-price").textContent,
+          paymentMethod: paymentMethod,
+          details: details,
+          date: new Date().toLocaleString(),
+        };
+        const transactions =
+          JSON.parse(localStorage.getItem("transactions")) || [];
+        transactions.push(transaction);
+        localStorage.setItem("transactions", JSON.stringify(transactions));
+        alert("Payment successful! Transaction stored.");
+        document.getElementById("payment-modal").classList.add("hidden");
+      }
+
+      // Confirm Credit Card Payment
+      document
+        .getElementById("confirm-payment-cc")
+        .addEventListener("click", function () {
+          const cardNumber = document.getElementById("cc-number").value;
+          const expiry = document.getElementById("cc-expiry").value;
+          const cvc = document.getElementById("cc-cvc").value;
+          if (cardNumber && expiry && cvc) {
+            storeTransaction("Credit Card", { cardNumber, expiry, cvc });
+          } else {
+            alert("Please fill in all the fields.");
+          }
+        });
+
+      // Confirm PayPal Payment
+      document
+        .getElementById("confirm-payment-pp")
+        .addEventListener("click", function () {
+          const paypalEmail = document.getElementById("paypal-email").value;
+          if (paypalEmail) {
+            storeTransaction("PayPal", { paypalEmail });
+          } else {
+            alert("Please enter your PayPal email.");
+          }
+        });
+
+      // Confirm GCash Payment
+      document
+        .getElementById("confirm-payment-gc")
+        .addEventListener("click", function () {
+          const gcashPhone = document.getElementById("gcash-phone").value;
+          if (gcashPhone) {
+            storeTransaction("GCash", { gcashPhone });
+          } else {
+            alert("Please enter your GCash number.");
+          }
+        });
+    </script>
+    <script src="js/index.js" defer></script>
+    <script src="js/registration.js" defer></script>
+  </body>
+</html>
